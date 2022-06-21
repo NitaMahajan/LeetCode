@@ -2,8 +2,8 @@ class Solution {
     public int waysToMakeFair(int[] nums) {
         int n = nums.length;
         if(n==1) return 1;
-        int forwardSum[] = new int[n];
-        int backwardSum[] = new int[n];
+        int forwardSum[] = new int[2];
+        int backwardSum[] = new int[2];
         for(int i = 0; i < n; i++) {
             forwardSum[i%2] += nums[i];
         }
