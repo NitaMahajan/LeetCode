@@ -1,30 +1,17 @@
 class Solution {
     public int waysToMakeFair(int[] nums) {
-        int prefixEvenSum[] = new int[nums.length];
-        int prefixOddSum[] = new int[nums.length];
-        prefixEvenSum[0] = nums[0];
-        for(int i = 1;i < nums.length;i++) {
-            if(i%2==0) {
-                prefixEvenSum[i] = prefixEvenSum[i-1]+nums[i];
-                prefixOddSum[i] = prefixOddSum[i-1];
-            } else {
-                prefixEvenSum[i] = prefixEvenSum[i-1];
-                prefixOddSum[i] = prefixOddSum[i-1]+nums[i];
-            }
+        int n = nums.length;
+        if(n==1) return 1;
+        int forwardSum[] = new int[n]; //forwardSum[0]=sumofeven, forwardSum[1]=sumofodd
+        int backwardSum[] = new int[n]; //backwardSum[0]=sumofeven, backwardSum[1]=sumofodd
+        for(int i = 0; i < n; i++) {
+            forwardSum[i%2] += nums[i];
         }
-        int prefixEvenSumBack = 0, prefixOddSumBack = 0, count = 0;
-        for(int i = nums.length - 1; i>=1;i--) {
-            if((prefixEvenSumBack + prefixEvenSum[i-1]) == (prefixOddSumBack + prefixOddSum[i-1])) {
-                count++;
-            }
-            if(i%2 == 0) {
-                prefixOddSumBack += nums[i];
-            } else {
-                prefixEvenSumBack += nums[i];
-            }
-        }
-        if(prefixEvenSumBack == prefixOddSumBack) {
-            count++;
+        int count = 0;
+        for(int i = nums.length - 1; i>=0;i--) {
+            forwardSum[i%2] -= nums[i];
+            if((forwardSum[0] + backwardSum[1]) == (forwardSum[1] + backwardSum[0])) count++;
+            backwardSum[i%2] += nums[i];
         }
         return count;
     }
