@@ -8,7 +8,6 @@ class Solution {
     }
     
     public int calculate(int nums[], int[][] memoize, int len, int index, int sum, int target) {
-        
         if(index == nums.length){
             if(sum == target) {
                 memoize[index][normalize(sum, len)] = 1;
@@ -23,13 +22,12 @@ class Solution {
         
         if(left == -1) {
             memoize[index + 1][normalize(sum+nums[index], len)] = calculate(nums,memoize,len,index+1,sum+nums[index],target);
-            left = memoize[index + 1][normalize(sum+nums[index], len)];
         }
         if(right == -1) {
             memoize[index + 1][normalize(sum-nums[index], len)] = calculate(nums,memoize,len,index+1,sum-nums[index],target);
-            right = memoize[index + 1][normalize(sum-nums[index], len)];
         }
-        return left + right;
+        return (memoize[index + 1][normalize(sum+nums[index], len)] + memoize[index + 1][normalize(sum-nums[index], len)]);
+        
     }
     
     public int getSum(int nums[]) {
