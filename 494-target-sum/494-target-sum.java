@@ -20,8 +20,15 @@ class Solution {
         }
         int left = memoize[index + 1][normalize(sum+nums[index], len)];
         int right = memoize[index + 1][normalize(sum-nums[index], len)];
-        if(left == -1) left = calculate(nums,memoize,len,index+1,sum+nums[index],target);
-        if(right == -1) right = calculate(nums,memoize,len,index+1,sum-nums[index],target);
+        
+        if(left == -1) {
+            memoize[index + 1][normalize(sum+nums[index], len)] = calculate(nums,memoize,len,index+1,sum+nums[index],target);
+            left = memoize[index + 1][normalize(sum+nums[index], len)];
+        }
+        if(right == -1) {
+            memoize[index + 1][normalize(sum-nums[index], len)] = calculate(nums,memoize,len,index+1,sum-nums[index],target);
+            right = memoize[index + 1][normalize(sum-nums[index], len)];
+        }
         return left + right;
     }
     
