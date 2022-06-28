@@ -29,8 +29,6 @@ class Solution {
             dp[i] = profit;
             i--;
         }
-        for(int j=0;j<=n;j++) System.out.print(dp[j] + " ");
-        System.out.println();
         return dp[0];
         
     }
