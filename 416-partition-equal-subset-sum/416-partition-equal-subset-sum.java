@@ -4,20 +4,18 @@ class Solution {
         int W = getSum(nums);
         if(W % 2 != 0) return false;
         W = W/2;
-        boolean dp[][]=new boolean[n+1][W+1];
-        for(int i=0;i<=n;i++) {
-            dp[i][0] = true;
-        }
+        boolean dpRow[]=new boolean[W+1];
+        dpRow[0] = true;
         for(int i=n-1;i>=0;i--) {
-            for(int w=1;w<=W;w++) {
+            for(int w=W; w>=0; w--) {
                 if(nums[i] <= w) { // We can take this number
-                    dp[i][w] = dp[i+1][w-nums[i]] || dp[i+1][w];
+                    dpRow[w] = dpRow[w-nums[i]] || dpRow[w];
                 } else {
-                    dp[i][w] = dp[i+1][w];
+                    dpRow[w] = dpRow[w];
                 }
             }
         }
-        return dp[0][W];
+        return dpRow[W];
     }
     
     public int getSum(int arr[]) {
