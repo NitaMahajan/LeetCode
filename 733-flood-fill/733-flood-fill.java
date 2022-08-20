@@ -1,6 +1,9 @@
 
 class Solution {
+    int[] direction = {0, 1, 0 , -1, 0};
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        if(image[sr][sc] == color) return image;
+        
         int m = image.length, n = image[0].length;
         boolean visited[][] = new boolean[m][n]; // 2d-visited array
         
@@ -16,35 +19,11 @@ class Solution {
             int nodeColumn = (int)node.getValue();
             image[nodeRow][nodeColumn] = color;
             
-            // Check above node
-            if(nodeRow -1 >= 0 && image[nodeRow-1][nodeColumn] == originalColor) {
-                if(!visited[nodeRow-1][nodeColumn]) {
-                    visited[nodeRow-1][nodeColumn] = true;
-                    queue.add(new Pair(nodeRow-1, nodeColumn));
-                }
-            }
-            // Check below node
-            if(nodeRow + 1 < m && image[nodeRow+1][nodeColumn] == originalColor) {
-                if(!visited[nodeRow+1][nodeColumn]) {
-                    visited[nodeRow+1][nodeColumn] = true;
-                    queue.add(new Pair(nodeRow+1, nodeColumn));
-                }
-            }
-            
-            // Check left node
-            if(nodeColumn - 1 >= 0 && image[nodeRow][nodeColumn-1] == originalColor) {
-                if(!visited[nodeRow][nodeColumn-1]) {
-                    visited[nodeRow][nodeColumn-1] = true;
-                    queue.add(new Pair(nodeRow, nodeColumn-1));
-                }
-            }
-            
-            // Check right node
-            if(nodeColumn + 1 < n && image[nodeRow][nodeColumn+1] == originalColor) {
-                if(!visited[nodeRow][nodeColumn+1]) {
-                    visited[nodeRow][nodeColumn+1] = true;
-                    queue.add(new Pair(nodeRow, nodeColumn+1));
-                }
+            for(int i=0;i<4;i++) {
+                int newRow = nodeRow + direction[i];
+                int newColumn = nodeColumn + direction[i+1];
+                if(newRow < 0 || newRow >= m || newColumn < 0 || newColumn >= n || image[newRow][newColumn] != originalColor) continue;
+                queue.add(new Pair(newRow, newColumn));
             }
         }
         return image;
