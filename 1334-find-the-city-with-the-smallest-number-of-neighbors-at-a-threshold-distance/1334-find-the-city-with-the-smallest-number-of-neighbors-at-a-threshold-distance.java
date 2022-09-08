@@ -37,18 +37,14 @@ class Solution {
                 }
             }
         }
-        int smallestCityIndex = -1;
-        int smallestCityCount = n+1;
+        int smallestCityIndex = -1, smallestCityCount = n+1;
         for(int i=0;i<n;i++) {
             int count = -1;
             for(int j=0;j<n;j++) {
-                if(distances[i][j] != Integer.MAX_VALUE) {
-                    count++;
-                }
+                if(distances[i][j] != Integer.MAX_VALUE) { count++; }
             }
             if(count <= smallestCityCount) {
-                smallestCityCount = count;
-                smallestCityIndex = i;
+                smallestCityCount = count; smallestCityIndex = i;
             }
         }
         return smallestCityIndex;
