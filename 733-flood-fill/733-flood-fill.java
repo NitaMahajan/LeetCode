@@ -5,11 +5,9 @@ class Solution {
         if(image[sr][sc] == color) return image;
         
         int m = image.length, n = image[0].length;
-        boolean visited[][] = new boolean[m][n]; // 2d-visited array
         
         Queue<Pair> queue = new LinkedList<>(); // Queue to perform BFS on the 2d-array
         Pair src = new Pair(sr, sc); // We will store Pair inside queue
-        visited[sr][sc] = true; // mark first position as visited
         queue.add(src);
         int originalColor = image[sr][sc];
 
