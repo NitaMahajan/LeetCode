@@ -6,18 +6,18 @@ class Solution {
         int components = 0;
         for(int i = 0; i < m; i++) {
             for(int j = 0; j < n; j++) {
-                if(!visited[i][j] && grid[i][j] == '1') {
-                    bfs(i, j, grid, visited, m, n);
+                if(grid[i][j] == '1') {
+                    bfs(i, j, grid, m, n);
                     components++;
                 }
             }
         }
         return components;
     }
-    public void bfs(int row, int col, char[][] grid, boolean visited[][], int maxRow, int maxCol) {
+    public void bfs(int row, int col, char[][] grid, int maxRow, int maxCol) {
         Queue<Pair> queue = new LinkedList<>();
         queue.add(new Pair(row, col));
-        visited[row][col] = true;
+        grid[row][col] = '2';
         while(!queue.isEmpty()) {
             Pair curr = queue.poll();
             int currRow = (int)curr.getKey();
@@ -25,10 +25,10 @@ class Solution {
             for(int i = 0; i < 4; i++) {
                 int newRow = currRow + direction[i];
                 int newCol = currCol + direction[i+1];
-                if(newRow < 0 || newRow >= maxRow || newCol < 0 || newCol >= maxCol || grid[newRow][newCol]!='1' || visited[newRow][newCol]) {
+                if(newRow < 0 || newRow >= maxRow || newCol < 0 || newCol >= maxCol || grid[newRow][newCol]!='1') {
                     continue;
                 }
-                visited[newRow][newCol] = true;
+                grid[newRow][newCol] = '2';
                 queue.add(new Pair(newRow, newCol));
             }
         }
