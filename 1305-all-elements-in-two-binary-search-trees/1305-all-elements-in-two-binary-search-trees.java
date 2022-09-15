@@ -15,35 +15,28 @@
  */
 class Solution {
     public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
-        List<Integer> list1 = new ArrayList<>(), list2 = new ArrayList<>();
-        List<Integer> list3 = new ArrayList<>();
-        inorder(root1, list1);
-        inorder(root2, list2);
-        int i=0,j=0,m=list1.size(),n=list2.size();
-        while((i<m) && (j<n)) {
-            if(list1.get(i) < list2.get(j)) {
-                list3.add(list1.get(i));
-                i++;
+        Stack<TreeNode> stack1 = new Stack<>();
+        Stack<TreeNode> stack2 = new Stack<>();
+        List<Integer> list = new ArrayList<>();
+        while(root1 != null || root2 != null || !stack1.isEmpty() || !stack2.isEmpty()) {
+            while(root1 != null) {
+                stack1.push(root1);
+                root1 = root1.left;
+            }
+            while(root2 != null) {
+                stack2.push(root2);
+                root2 = root2.left;
+            }
+            if(stack2.isEmpty() || (!stack1.isEmpty() && stack1.peek().val <= stack2.peek().val )) {
+                root1 = stack1.pop();
+                list.add(root1.val);
+                root1 = root1.right;
             } else {
-                list3.add(list2.get(j));
-                j++;
+                root2 = stack2.pop();
+                list.add(root2.val);
+                root2 = root2.right;
             }
         }
-        while(i<m) {
-            list3.add(list1.get(i));
-            i++;
-        }
-        while(j<n) {
-            list3.add(list2.get(j));
-            j++;
-        }
-        return list3;
-    }
-    public void inorder(TreeNode root, List<Integer> list) {
-        if(root != null) {
-            inorder(root.left,list);
-            list.add(root.val);
-            inorder(root.right,list);
-        }
+        return list;
     }
 }
