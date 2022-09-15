@@ -15,22 +15,13 @@
  */
 class Solution {
     public TreeNode increasingBST(TreeNode root) {
-        if(root == null) return null;
-        List<TreeNode> list = new ArrayList<>();
-        inorder(root, list);
-        for(int i=0;i<list.size()-1;i++) {
-            TreeNode curr = list.get(i);
-            curr.left = null;
-            curr.right = list.get(i+1);
-        }
-        list.get(list.size()-1).left=null;
-        return list.get(0);
+        return increasingBST(root,null);
     }
-    void inorder(TreeNode root, List<TreeNode> list) {
-        if(root != null) {
-            inorder(root.left, list);
-            list.add(root);
-            inorder(root.right, list);
-        }
+    public TreeNode increasingBST(TreeNode root, TreeNode tail) {
+        if(root == null) return tail;
+        TreeNode res = increasingBST(root.left, root);
+        root.left = null;
+        root.right = increasingBST(root.right, tail);
+        return res;
     }
 }
