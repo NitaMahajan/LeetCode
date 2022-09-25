@@ -21,13 +21,8 @@ class Solution {
     public int maxAncestorDiff(TreeNode root, int min, int max) {
         if(root == null) return -1;
         int val = Math.max(Math.abs(root.val - min),Math.abs(root.val-max));
-        int newMin = Math.min(min, root.val);
-        int newMax = Math.max(max, root.val);
-        int left = maxAncestorDiff(root.left, newMin, newMax);
-        int right = maxAncestorDiff(root.right, newMin, newMax);
-        if(left == -1 && right == -1) return val;
-        else if(left == -1) return Math.max(val, right);
-        else if(right == -1) return Math.max(val, left);
+        int left = maxAncestorDiff(root.left, Math.min(min, root.val), Math.max(max, root.val));
+        int right = maxAncestorDiff(root.right, Math.min(min, root.val), Math.max(max, root.val));
         return Math.max(val, Math.max(left, right));
     }
 }
