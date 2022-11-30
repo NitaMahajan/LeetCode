@@ -14,33 +14,14 @@
  * }
  */
 
-class Pair {
-    private int child;
-    private int grandChild;
-    Pair(int child, int grandChild) {
-        this.child = child;
-        this.grandChild = grandChild;
-    }
-    int getChild() { return this.child; }
-    int getGrandChild() { return this.grandChild; }
-}
 class Solution {
     public int sumEvenGrandparent(TreeNode root) {
-        int ans[] = new int[1];
-        sumEvenGrandparent(root, ans);
-        return ans[0];
+        return sumEvenGrandparent(root,1,1);
     }
-    public Pair sumEvenGrandparent(TreeNode root, int ans[]) {
-        if(root == null) {
-            return new Pair(0, 0);
-        }
-        Pair left = sumEvenGrandparent(root.left, ans);
-        Pair right = sumEvenGrandparent(root.right, ans);
-        int childSum = left.getChild() + right.getChild();
-        int grandChildSum = left.getGrandChild() + right.getGrandChild();
-        if(root.val % 2 == 0) {
-            ans[0] = ans[0] + grandChildSum;
-        }
-        return new Pair(root.val, childSum);
+    public int sumEvenGrandparent(TreeNode root, int parent, int grandParent) {
+        if(root == null) return 0;
+        int left = sumEvenGrandparent(root.left, root.val, parent);
+        int right = sumEvenGrandparent(root.right, root.val, parent);
+        return left + right + (grandParent % 2 == 0 ? root.val : 0);
     }
 }
