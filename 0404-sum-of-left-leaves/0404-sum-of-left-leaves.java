@@ -15,18 +15,14 @@
  */
 class Solution {
     public int sumOfLeftLeaves(TreeNode root) {
-        int ans[] = new int[1];
-        sumOfLeftLeaves(root, false, ans);
-        return ans[0];
+        return sumOfLeftLeaves(root, false);
     }
     
-    public void sumOfLeftLeaves(TreeNode root, boolean left, int ans[]) {
-        if(root == null) return;
+    public int sumOfLeftLeaves(TreeNode root, boolean left) {
+        if(root == null) return 0;
         if(left && root.left == null && root.right == null) {
-            ans[0] += root.val;
-            return;
+            return root.val;
         }
-        sumOfLeftLeaves(root.left, true, ans);
-        sumOfLeftLeaves(root.right, false, ans);
+        return sumOfLeftLeaves(root.left, true) + sumOfLeftLeaves(root.right, false);
     }
 }
